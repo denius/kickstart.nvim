@@ -88,10 +88,12 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- by denis vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+-- by denis vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -105,7 +107,9 @@ vim.opt.number = true
 -- vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
+-- by denis vim.opt.mouse = 'a'
+-- Enable mouse mode only in Normal and Visual
+vim.opt.mouse = 'nv'
 
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
@@ -113,7 +117,8 @@ vim.opt.showmode = false
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = 'unnamedplus'
+-- by denis vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamed'
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -142,8 +147,14 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- by denis vim.opt.list = true
+vim.opt.list = false
+-- by denis vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.o.listchars = 'tab:—▷,trail:⋅,nbsp:␣,space:⋅'
+vim.opt.listchars = { tab = '—▷', trail = '⋅', nbsp = '␣', space = '⋅' }
+
+-- by denis^ see https://stackoverflow.com/questions/51995128/setting-autoindentation-to-spaces-in-neovim
+vim.opt.expandtab = true
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -152,20 +163,57 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+-- by denis vim.opt.scrolloff = 10
+vim.opt.scrolloff = 3 -- minimal number of screen lines to keep above and below the cursor.
+vim.opt.sidescrolloff = 5 -- minimal number of screen lines to keep left and right of the cursor.
+
+-- by denis
+-- virtualedit -- allow cursor moving over blank space
+-- vim.opt.virtualedit = 'all'
+vim.opt.virtualedit = 'block,onemore'
+
+-- by denis
+-- Set completeopt to have a better completion experience
+-- vim.o.completeopt = 'menuone,noselect'
+--vim.o.completeopt = 'menuone'
+
+-- by denis
+-- NOTE: You should make sure your terminal supports this
+vim.o.termguicolors = true
+
+-- # Russian settings
+-- Possible file encodings and detection sequence.
+vim.opt.fileencodings = 'utf8,cp1251,koi8-r'
+-- Switching keyboard layouts by <C-^>, more precisely by <C-6>
+vim.opt.keymap = 'russian-jcukenwin'
+vim.opt.iminsert = 0 -- Keymap by default is en_US
+vim.opt.imsearch = 0 -- -1 is an bug
+-- spell
+vim.opt.spelllang = 'en_us,ru_yo'
+vim.keymap.set('n', '<LocalLeader>s', ':setlocal spell!<CR>', { silent = true, desc = 'Spell toggle' }) -- spell toggle
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- by denis vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<LocalLeader>/', '<cmd>nohlsearch<CR>', { silent = true }) -- nohlsearch
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- by denis
+vim.keymap.set('n', '<localleader>d', function()
+  if vim.diagnostic.is_disabled() then
+    vim.diagnostic.enable()
+  else
+    vim.diagnostic.disable()
+  end
+end, { desc = 'Enable|Disable displayed diagnostics messages' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -189,6 +237,61 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- by denis: navigate buffers, see also bufferline
+vim.keymap.set('n', '<LocalLeader>h', ':bprevious<cr>', { silent = true }) -- previous buffer
+vim.keymap.set('n', '<LocalLeader>l', ':bnext<cr>', { silent = true }) -- next buffer
+vim.keymap.set('n', '<LocalLeader>1', ':buffer1<cr>', { silent = true }) -- switch to buffer 1
+vim.keymap.set('n', '<LocalLeader>2', ':buffer2<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>3', ':buffer3<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>4', ':buffer4<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>5', ':buffer5<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>6', ':buffer6<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>7', ':buffer7<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>8', ':buffer8<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<LocalLeader>9', ':buffer9<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-1>', ':buffer1<cr>', { silent = true }) -- switch to buffer 1
+vim.keymap.set('n', '<M-2>', ':buffer2<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-3>', ':buffer3<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-4>', ':buffer4<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-5>', ':buffer5<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-6>', ':buffer6<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-7>', ':buffer7<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-8>', ':buffer8<cr>', { silent = true }) -- switch to buffer
+vim.keymap.set('n', '<M-9>', ':buffer9<cr>', { silent = true }) -- switch to buffer
+
+-- by denis: smart Home/End,  inspired by http://linsovet.com/vim-usefull-homekey-and-endkey
+local home_button = function()
+  local current_cursor_column = vim.fn.virtcol '.'
+  vim.fn.execute('normal g^', 'silent')
+  if current_cursor_column == vim.fn.virtcol '.' then
+    vim.fn.execute('normal g0', 'silent')
+  end
+end
+vim.keymap.set('n', '<End>', 'g$', { silent = true })
+vim.keymap.set('n', '<Home>', home_button, { silent = true })
+vim.keymap.set('i', '<Home>', function()
+  home_button()
+end, { silent = true })
+
+-- by denis
+vim.keymap.set('n', '<LocalLeader>w', ':set wrap!<cr>', { silent = true }) -- line wrap by words toggle
+
+-- by denis
+-- UP/DOWN will go through screen lines even for long lines
+-- by https://stackoverflow.com/questions/5478933/vim-move-around-quickly-inside-of-long-line
+vim.keymap.set('n', '<Up>', ':call execute("normal gk")<CR>', { silent = true })
+vim.keymap.set('i', '<Up>', '<C-o>:call execute("normal gk")<CR>', { silent = true })
+vim.keymap.set('n', '<Down>', ':call execute("normal gj")<CR>', { silent = true })
+vim.keymap.set('i', '<Down>', '<C-o>:call execute("normal gj")<CR>', { silent = true })
+
+-- by denis: Remap for dealing with word wrap
+vim.keymap.set('n', 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, silent = true })
+vim.keymap.set('n', 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, silent = true })
+
+-- by denis: Do not yank symbols by Del
+-- https://vi.stackexchange.com/questions/14361/dont-yank-character-with-del-key-in-normal-mode
+vim.keymap.set('n', '<Del>', '"_x', { silent = true })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -660,6 +763,8 @@ require('lazy').setup({
         -- javascript = { { "prettierd", "prettier" } },
       },
     },
+
+    enabled = false, -- by denis
   },
 
   { -- Autocompletion
@@ -886,6 +991,8 @@ require('lazy').setup({
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- { import = 'custom.plugins' },
+  -- by denis: enable custom plugins
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
