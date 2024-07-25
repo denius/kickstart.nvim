@@ -277,9 +277,11 @@ vim.keymap.set('n', '<LocalLeader>w', ':set wrap!<cr>', { silent = true }) -- li
 -- by denis
 -- UP/DOWN will go through screen lines even for long lines
 -- by https://stackoverflow.com/questions/5478933/vim-move-around-quickly-inside-of-long-line
-vim.keymap.set('n', '<Up>', ':call execute("normal gk")<CR>', { silent = true })
+-- vim.keymap.set('n', '<Up>', ':call execute("normal gk")<CR>', { silent = true })
+vim.keymap.set('n', '<Up>', 'gk', { silent = false })
 vim.keymap.set('i', '<Up>', '<C-o>:call execute("normal gk")<CR>', { silent = true })
-vim.keymap.set('n', '<Down>', ':call execute("normal gj")<CR>', { silent = true })
+-- vim.keymap.set('n', '<Down>', ':call execute("normal gj")<CR>', { silent = true })
+vim.keymap.set('n', '<Down>', 'gj', { silent = false })
 vim.keymap.set('i', '<Down>', '<C-o>:call execute("normal gj")<CR>', { silent = true })
 
 -- by denis: Remap for dealing with word wrap
@@ -609,34 +611,34 @@ require('lazy').setup({
 
           -- by denis, provided by 'RRethy/vim-illuminate' plugin
 
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-            local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
-            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-              buffer = event.buf,
-              group = highlight_augroup,
-              callback = vim.lsp.buf.document_highlight,
-            })
+          -- -- The following two autocommands are used to highlight references of the
+          -- -- word under your cursor when your cursor rests there for a little while.
+          -- --    See `:help CursorHold` for information about when this is executed
+          -- --
+          -- -- When you move your cursor, the highlights will be cleared (the second autocommand).
+          -- local client = vim.lsp.get_client_by_id(event.data.client_id)
+          -- if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          --   local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+          --   vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+          --     buffer = event.buf,
+          --     group = highlight_augroup,
+          --     callback = vim.lsp.buf.document_highlight,
+          --   })
 
-            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-              buffer = event.buf,
-              group = highlight_augroup,
-              callback = vim.lsp.buf.clear_references,
-            })
+          --   vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+          --     buffer = event.buf,
+          --     group = highlight_augroup,
+          --     callback = vim.lsp.buf.clear_references,
+          --   })
 
-            vim.api.nvim_create_autocmd('LspDetach', {
-              group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-              callback = function(event2)
-                vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
-              end,
-            })
-          end
+          --   vim.api.nvim_create_autocmd('LspDetach', {
+          --     group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+          --     callback = function(event2)
+          --       vim.lsp.buf.clear_references()
+          --       vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+          --     end,
+          --   })
+          -- end
 
           -- The following code creates a keymap to toggle inlay hints in your
           -- code, if the language server you are using supports them
