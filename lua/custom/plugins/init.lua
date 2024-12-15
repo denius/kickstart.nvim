@@ -4,6 +4,11 @@
 -- See the kickstart.nvim README for more information
 return {
 
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    -- by denis: DISABLE!
+    enabled = false,
+  },
 
   -- by denis
   {
