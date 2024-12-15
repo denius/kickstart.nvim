@@ -2,7 +2,21 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+--
+
+-- Show keymap in lualine status
+-- https://github.com/nvim-lualine/lualine.nvim/issues/368
+-- https://github.com/nvim-lualine/lualine.nvim/wiki/Component-snippets#keymap
+local function keymap()
+  if vim.opt.iminsert:get() > 0 and vim.b.keymap_name then
+    return '[' .. vim.b.keymap_name:upper() .. ']'
+  end
+  return ''
+end
+
 return {
+
+  -- by denis
 
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -10,7 +24,6 @@ return {
     enabled = false,
   },
 
-  -- by denis
   {
     'yorik1984/newpaper.nvim',
     priority = 999,
@@ -25,17 +38,23 @@ return {
     end,
   },
 
-  {
-    -- Set lualine as statusline
+  { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
       options = {
         icons_enabled = false,
-        --theme = 'onedark',
-        theme = 'newpaper',
-        component_separators = '|',
-        section_separators = '',
+        theme = 'auto',
+        -- section_separators = '|',
+        -- component_separators = '',
+        section_separators = { left = '', right = '' },
+        -- component_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
+      },
+      sections = {
+        -- lualine_a = {'mode', keymap},
+        -- lualine_c = {'filename', keymap},
+        lualine_x = {keymap, 'encoding', 'fileformat', 'filetype'},
       },
     },
   },
