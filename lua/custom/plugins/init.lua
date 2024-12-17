@@ -312,6 +312,21 @@ return {
     end,
   },
 
+  -- color hex codes and color names
+  -- test: #AF0000, "#AF0000"
+  -- https://github.com/chrisbra/Colorizer
+  {
+    'chrisbra/Colorizer',
+    lazy = true, -- to load plugin use command: `:Lazy load Colorizer`
+    config = function()
+      -- vim.g.colorizer_auto_color = 1
+      vim.g.colorizer_colornames = 0
+      vim.g.colorizer_skip_comments = 0
+      -- vim.g.colorizer_auto_map = 1
+      vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
+    end,
+  },
+
   -- LLM plugin
   {
     'David-Kunz/gen.nvim',
