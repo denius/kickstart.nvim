@@ -25,8 +25,20 @@ return {
   },
 
   {
+    'Mofiqul/vscode.nvim',
+    priority = 99,
+    config = function()
+      -- For dark theme (neovim's default)
+      -- vim.o.background = 'dark'
+      -- For light theme
+      vim.o.background = 'light'
+      vim.cmd.colorscheme 'vscode'
+    end,
+  },
+
+  {
     'yorik1984/newpaper.nvim',
-    priority = 999,
+    priority = 90,
     -- init = function() -- `init` here is because `setup` is not lazy but `init` is.
     config = function()
       require('newpaper').setup {
