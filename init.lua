@@ -1072,6 +1072,11 @@ require('lazy').setup({
   },
 })
 
+-- For dark theme (neovim's default)
+-- vim.o.background = 'dark'
+-- For light theme
+vim.o.background = 'light'
+
 -- vim.cmd.colorscheme 'vscode'
 
 -- The line beneath this is called `modeline`. See `:help modeline`

@@ -28,10 +28,6 @@ return {
     'Mofiqul/vscode.nvim',
     priority = 99,
     config = function()
-      -- For dark theme (neovim's default)
-      -- vim.o.background = 'dark'
-      -- For light theme
-      vim.o.background = 'light'
       vim.cmd.colorscheme 'vscode'
     end,
   },
