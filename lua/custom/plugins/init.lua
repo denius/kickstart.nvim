@@ -24,11 +24,37 @@ return {
     enabled = false,
   },
 
+  -- {
+  --   'Mofiqul/vscode.nvim',
+  --   priority = 99,
+  --   config = function()
+  --     vim.cmd.colorscheme 'vscode'
+  --   end,
+  -- },
+
   {
-    'Mofiqul/vscode.nvim',
-    priority = 99,
-    config = function()
-      vim.cmd.colorscheme 'vscode'
+    "0xstepit/flow.nvim",
+    lazy = false,
+    priority = 1000,
+    -- tag = "v1.0.0",
+    opts = {
+      theme = {
+        style = "dark", --  "dark" | "light"
+        contrast = "default", -- "default" | "high"
+        transparent = false, -- true | false
+      },
+      colors = {
+        mode = "default", -- "default" | "dark" | "light"
+        fluo = "pink", -- "pink" | "cyan" | "yellow" | "orange" | "green"
+      },
+      ui = {
+        borders = "light", -- "theme" | "inverse" | "fluo" | "none"
+        aggressive_spell = false, -- true | false
+      },
+    },
+    config = function(_, opts)
+      require("flow").setup(opts)
+      vim.cmd("colorscheme flow")
     end,
   },
 
@@ -333,6 +359,15 @@ return {
       -- vim.g.colorizer_auto_map = 1
       vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
     end,
+  },
+
+  -- plugins/quarto.lua
+  {
+    "quarto-dev/quarto-nvim",
+    dependencies = {
+      "jmbuhr/otter.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
   },
 
   -- LLM plugin
