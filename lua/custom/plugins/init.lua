@@ -176,6 +176,12 @@ return {
     'godlygeek/tabular',
   },
 
+  -- for tables alignment, for Markdown also.
+  -- Usage by call `vip` and `:'<,'>EasyAlign *|`
+  {
+    'junegunn/vim-easy-align',
+  },
+
   -- latex symbols complete
   {
     'kdheepak/cmp-latex-symbols',
