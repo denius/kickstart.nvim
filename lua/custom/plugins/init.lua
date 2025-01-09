@@ -199,12 +199,27 @@ return {
   --   -- config in the cmp.setup() section in tail of file
   -- },
 
-  -- autopair
+  -- autopairs
+  -- https://github.com/windwp/nvim-autopairs
+  -- extended kickstart.nvim config
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    opts = {}, -- this is equalent to setup({}) function
+    -- Optional dependency
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      require('nvim-autopairs').setup({
+        ignored_next_char = [=[[А-Яа-яЁё%w%%%'%[%"%.%`%$]]=],
+        -- ignored_next_char = "(" .. "[\194-\244]" .. "|" .. "[\128-\191]" .. "|" .. "[%w%%%'%[%\"%.%`%$]" .. ")",
+        -- ignored_next_char = "(" .. [=[[%w%%%'%[%"%.%`%$]]=] .. "|" .. "[\194-\244][\128-\191]" .. ")",
+      })
+      -- If you want to automatically add `(` after selecting a function or method
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+      local cmp = require 'cmp'
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    end,
   },
+
 
   -- vim-swap: swap arguments delimited with ','. Keys: g< and g>
   {
