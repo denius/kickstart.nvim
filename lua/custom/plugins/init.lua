@@ -431,6 +431,18 @@ return {
     },
   },
 
+  -- Highly customisable markdown(latex & inline html) previewer for Neovim
+  -- https://github.com/OXY2DEV/markview.nvim
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,      -- Recommended
+    -- ft = { "markdown", "quarto", "rmd" }, -- If you decide to lazy-load anyway
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    }
+  },
+
   -- LLM plugin
   {
     'David-Kunz/gen.nvim',
