@@ -422,6 +422,11 @@ return {
     end,
   },
 
+  -- https://github.com/JuliaEditorSupport/julia-vim
+  {
+    "JuliaEditorSupport/julia-vim",
+  },
+
   -- plugins/quarto.lua
   {
     "quarto-dev/quarto-nvim",
