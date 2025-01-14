@@ -32,6 +32,8 @@ return {
   --   end,
   -- },
 
+  -- A flow-immersive Nvim colorscheme with fluorescent details
+  -- https://github.com/0xstepit/flow.nvim
   {
     "0xstepit/flow.nvim",
     lazy = false,
@@ -48,7 +50,7 @@ return {
         fluo = "pink", -- "pink" | "cyan" | "yellow" | "orange" | "green"
       },
       ui = {
-        borders = "light", -- "theme" | "inverse" | "fluo" | "none"
+        borders = "inverse", -- "theme" | "inverse" | "fluo" | "none"
         aggressive_spell = false, -- true | false
       },
     },
