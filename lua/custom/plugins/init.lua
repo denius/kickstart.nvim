@@ -492,6 +492,11 @@ return {
 
   -- markdown preview plugin for (neo)vim
   -- https://github.com/iamcco/markdown-preview.nvim
+  -- For setup CSS run:
+  -- ```
+  -- cd ~/.config
+  -- git clone https://github.com/denius/markdown-css.git
+  -- ```
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
