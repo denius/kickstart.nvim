@@ -438,10 +438,20 @@ return {
 
   -- Highly customisable markdown(latex & inline html) previewer for Neovim
   -- https://github.com/OXY2DEV/markview.nvim
+  -- `:Markview hybridToggle` to switch into Hybrid mode
   {
     "OXY2DEV/markview.nvim",
     lazy = false,      -- Recommended
     -- ft = { "markdown", "quarto", "rmd" }, -- If you decide to lazy-load anyway
+    config = function()
+      require('markview').setup {
+        -- initial_state = false, -- not previewe on load
+        hybrid_modes = { "n" },
+      }
+      vim.cmd("Markview hybridDisable")
+      vim.cmd("Markview disableAll")
+      vim.keymap.set('n', '<LocalLeader>v', ':Markview<cr>', { silent = false })
+    end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons"
