@@ -468,7 +468,16 @@ return {
       vim.g.mkdp_filetypes = { "markdown", "quarto" }
       vim.g.mkdp_auto_close = 1
       -- vim.g.mkdp_command_for_global = 1
-      vim.g.mkdp_browser = '/snap/bin/chromium'
+      -- vim.g.mkdp_browser = '/snap/bin/chromium'
+      -- via https://github.com/iamcco/markdown-preview.nvim/issues/262#issuecomment-1219333266
+      vim.cmd(
+        [[
+        function OpenMarkdownPreview (url)
+        execute "silent ! /usr/bin/chromium-browser --new-window --app=" . a:url
+        endfunction
+        ]]
+      )
+      vim.g.mkdp_browserfunc = 'OpenMarkdownPreview'
       vim.keymap.set('n', '<LocalLeader>v', ':MarkdownPreviewToggle<cr>', { silent = false })
     end,
     ft = { "markdown", "quarto" },
