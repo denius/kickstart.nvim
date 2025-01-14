@@ -458,6 +458,21 @@ return {
     }
   },
 
+  -- markdown preview plugin for (neo)vim
+  -- https://github.com/iamcco/markdown-preview.nvim
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown", "quarto" }
+      vim.g.mkdp_auto_close = 1
+      -- vim.g.mkdp_command_for_global = 1
+      vim.g.mkdp_browser = '/snap/bin/chromium'
+    end,
+    ft = { "markdown", "quarto" },
+  },
+
   -- LLM plugin
   {
     'David-Kunz/gen.nvim',
