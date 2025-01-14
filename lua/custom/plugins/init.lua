@@ -498,6 +498,8 @@ return {
       vim.g.mkdp_filetypes = { "markdown", "quarto" }
       vim.g.mkdp_auto_close = 1
       -- vim.g.mkdp_command_for_global = 1
+      vim.g.mkdp_highlight_css = vim.fn.expand('~/.config/markdown-css/github-markdown-css-light.css')
+      vim.g.mkdp_markdown_css = vim.fn.expand('~/.config/markdown-css/github-markdown-css-light.css')
       -- vim.g.mkdp_browser = '/snap/bin/chromium'
       -- via https://github.com/iamcco/markdown-preview.nvim/issues/262#issuecomment-1219333266
       vim.cmd(
