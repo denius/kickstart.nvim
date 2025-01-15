@@ -459,6 +459,19 @@ return {
     "JuliaEditorSupport/julia-vim",
   },
 
+  -- Tiny plugin to enhance Neovim's native comments
+  -- https://github.com/folke/ts-comments.nvim
+  {
+    "folke/ts-comments.nvim",
+    opts = {
+      lang = {
+        julia = "// %s",
+      },
+    },
+    event = "VeryLazy",
+    enabled = vim.fn.has("nvim-0.10.0") == 1,
+  },
+
   -- plugins/quarto.lua
   {
     "quarto-dev/quarto-nvim",
