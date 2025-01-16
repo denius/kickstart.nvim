@@ -481,27 +481,43 @@ return {
     },
   },
 
-  -- -- Highly customisable markdown(latex & inline html) previewer for Neovim
-  -- -- https://github.com/OXY2DEV/markview.nvim
-  -- -- `:Markview hybridToggle` to switch into Hybrid mode
-  -- {
-  --   "OXY2DEV/markview.nvim",
-  --   lazy = false,      -- Recommended
-  --   -- ft = { "markdown", "quarto", "rmd" }, -- If you decide to lazy-load anyway
-  --   config = function()
-  --     require('markview').setup {
-  --       -- initial_state = false, -- not previewe on load
-  --       hybrid_modes = { "n" },
-  --     }
-  --     vim.cmd("Markview hybridDisable")
-  --     vim.cmd("Markview disableAll")
-  --     vim.keymap.set('n', '<LocalLeader>v', ':Markview<cr>', { silent = false })
-  --   end,
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "nvim-tree/nvim-web-devicons"
-  --   }
-  -- },
+  -- Plugin to improve viewing Markdown files in Neovim
+  -- https://github.com/MeanderingProgrammer/render-markdown.nvim
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+    config = function ()
+      require('render-markdown').setup({
+        enabled = false,
+        file_types = { 'markdown', 'quarto' },
+        bullet = {
+          -- icons = { '● ', '○ ', '◆ ', '◇ ' },
+          -- left_pad = 2,
+          right_pad = 1,
+        },
+        code = {
+          -- style = 'normal',
+          border = 'thick',
+        },
+        link = {
+          -- Turn on / off inline link icon rendering
+          enabled = false,
+        },
+      })
+      local cmp = require('cmp')
+      cmp.setup({
+        sources = cmp.config.sources({
+          { name = 'render-markdown' },
+        }),
+      })
+      vim.keymap.set('n', '<LocalLeader>m', '<Cmd>RenderMarkdown toggle<cr>', { silent = false })
+    end,
+  },
 
   -- markdown preview plugin for (neo)vim
   -- https://github.com/iamcco/markdown-preview.nvim
