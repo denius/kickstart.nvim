@@ -4,7 +4,7 @@
 -- See the kickstart.nvim README for more information
 --
 
--- Show keymap in lualine status
+-- Show Lang keymap in lualine status
 -- https://github.com/nvim-lualine/lualine.nvim/issues/368
 -- https://github.com/nvim-lualine/lualine.nvim/wiki/Component-snippets#keymap
 local function keymap()
@@ -24,6 +24,10 @@ return {
     enabled = false,
   },
 
+  ---------------------------------------------------------------------------
+  --- Color Schemes
+
+  -- -- not compatible with VSCode Neovim extension!!!
   -- {
   --   'Mofiqul/vscode.nvim',
   --   priority = 99,
@@ -74,7 +78,26 @@ return {
     end,
   },
 
-  { -- Set lualine as statusline
+  -- color hex codes and color names
+  -- test: #AF0000, "#AF0000"
+  -- https://github.com/chrisbra/Colorizer
+  {
+    'chrisbra/Colorizer',
+    lazy = true, -- to load plugin use command: `:Lazy load Colorizer`
+    config = function()
+      -- vim.g.colorizer_auto_color = 1
+      vim.g.colorizer_colornames = 0
+      vim.g.colorizer_skip_comments = 0
+      -- vim.g.colorizer_auto_map = 1
+      vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
+    end,
+  },
+
+  ---------------------------------------------------------------------------
+  --- UI
+
+  -- Set lualine as statusline
+  {
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -95,8 +118,109 @@ return {
     },
   },
 
+  -- tabsline
   {
-    -- Add indentation guides even on blank lines
+    'akinsho/bufferline.nvim',
+    version = '*',
+    -- dependencies = 'nvim-tree/nvim-web-devicons', -- drop using icons in tabline
+    opts = {
+      highlights = {
+        background = {
+          italic = true,
+        },
+        buffer_selected = {
+          bold = true,
+        },
+      },
+      options = {
+        -- enabled = true,
+        show_tab_indicators = true,
+        mode = 'buffers', -- set to 'tabs' to only show tabpages instead
+        numbers = 'none', -- can be 'none' | 'ordinal' | 'buffer_id' | 'both' | function
+        indicator = {
+          -- icon = '▎', -- unused
+          style = 'none', -- can be 'icon'|'underline'|'none',
+        },
+        always_show_bufferline = true,
+        diagnostics = false,
+        diagnostics_indicator = false,
+        -- custom_filter = false,
+        show_buffer_icons = false, -- disable filetype icons
+      },
+    },
+  },
+
+  -- close buffers
+  -- https://github.com/ojroques/nvim-bufdel
+  {
+    'ojroques/nvim-bufdel',
+    opts = {
+      next = 'tabs', -- 'cycle' | 'tabs' (default) | 'alternate'
+      quit = true, -- quit Neovim when last buffer is closed
+    },
+    config = function()
+      -- close buffer via 'ojroques/nvim-bufdel' plugin
+      vim.keymap.set('n', '<LocalLeader>q', ':BufDel<cr>', { silent = true })
+    end,
+  },
+
+  -- highlight (underline) word under cursor
+  -- https://github.com/RRethy/vim-illuminate
+  {
+    'RRethy/vim-illuminate',
+    opts = {},
+    config = function()
+      require('illuminate').configure {
+        -- providers: provider used to get references in the buffer, ordered by priority
+        providers = {
+          'lsp',
+          'treesitter',
+          'regex',
+        },
+        -- delay: delay in milliseconds
+        delay = 120,
+        -- filetype_overrides: filetype specific overrides.
+        -- The keys are strings to represent the filetype while the values are tables that
+        -- supports the same keys passed to .configure except for filetypes_denylist and filetypes_allowlist
+        filetype_overrides = {},
+        -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
+        filetypes_denylist = {
+          'dirvish',
+          'fugitive',
+          'alpha',
+          'NvimTree',
+          'lazy',
+          'neogitstatus',
+          'Trouble',
+          'lir',
+          'Outline',
+          'spectre_panel',
+          'toggleterm',
+          'DressingSelect',
+          'TelescopePrompt',
+        },
+        -- filetypes_allowlist: filetypes to illuminate, this is overridden by filetypes_denylist
+        filetypes_allowlist = {},
+        -- modes_denylist: modes to not illuminate, this overrides modes_allowlist
+        modes_denylist = {},
+        -- modes_allowlist: modes to illuminate, this is overridden by modes_denylist
+        modes_allowlist = {},
+        -- providers_regex_syntax_denylist: syntax to not illuminate, this overrides providers_regex_syntax_allowlist
+        -- Only applies to the 'regex' provider
+        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+        providers_regex_syntax_denylist = {},
+        -- providers_regex_syntax_allowlist: syntax to illuminate, this is overridden by providers_regex_syntax_denylist
+        -- Only applies to the 'regex' provider
+        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+        providers_regex_syntax_allowlist = {},
+        -- under_cursor: whether or not to illuminate under the cursor
+        under_cursor = true,
+      }
+    end,
+  },
+
+  -- Add indentation guides, even on blank lines
+  {
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
@@ -158,48 +282,19 @@ return {
     end,
   },
 
+  ---------------------------------------------------------------------------
+  --- Behavior
+
   -- restore cursor position on file reopen
   { 'farmergreg/vim-lastplace' },
 
-  -- math calculator, in completion
+  -- avoid change cursor to center after bnext
+  -- https://github.com/BranimirE/fix-auto-scroll.nvim
   {
-    'hrsh7th/cmp-calc',
-    dependencies = { 'hrsh7th/nvim-cmp' },
-    -- config in the cmp.setup() section in tail of file
+    'BranimirE/fix-auto-scroll.nvim',
+    config = true,
+    event = 'VeryLazy',
   },
-
-  -- math calc
-  {
-    'arecarn/crunch.vim',
-  },
-
-  -- Tabulator
-  {
-    'godlygeek/tabular',
-  },
-
-  -- for tables alignment, for Markdown also.
-  -- Usage by call `vip` and `:'<,'>EasyAlign *|`
-  {
-    'junegunn/vim-easy-align',
-  },
-
-  -- latex symbols complete
-  {
-    'kdheepak/cmp-latex-symbols',
-    dependencies = { 'hrsh7th/nvim-cmp' },
-    -- config in the cmp.setup() section in tail of file
-  },
-
-  -- --  scheme support
-  -- {
-  --   'Olical/conjure',
-  -- },
-  -- {
-  --   'PaterJason/cmp-conjure',
-  --   dependencies = { 'hrsh7th/nvim-cmp' },
-  --   -- config in the cmp.setup() section in tail of file
-  -- },
 
   -- autopairs
   -- https://github.com/windwp/nvim-autopairs
@@ -222,98 +317,38 @@ return {
     end,
   },
 
-
-  -- vim-swap: swap arguments delimited with ','. Keys: g< and g>
+  -- faster big files
+  -- https://github.com/pteroctopus/faster.nvim
+  -- config by https://github.com/pteroctopus/faster.nvim/issues/2#issue-2680715449
   {
-    'machakann/vim-swap',
-  },
-
-  -- highlight (underline) word under cursor
-  -- https://github.com/RRethy/vim-illuminate
-  {
-    'RRethy/vim-illuminate',
-    opts = {},
-    config = function()
-      require('illuminate').configure {
-        -- providers: provider used to get references in the buffer, ordered by priority
-        providers = {
-          'lsp',
-          'treesitter',
-          'regex',
-        },
-        -- delay: delay in milliseconds
-        delay = 120,
-        -- filetype_overrides: filetype specific overrides.
-        -- The keys are strings to represent the filetype while the values are tables that
-        -- supports the same keys passed to .configure except for filetypes_denylist and filetypes_allowlist
-        filetype_overrides = {},
-        -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
-        filetypes_denylist = {
-          'dirvish',
-          'fugitive',
-          'alpha',
-          'NvimTree',
-          'lazy',
-          'neogitstatus',
-          'Trouble',
-          'lir',
-          'Outline',
-          'spectre_panel',
-          'toggleterm',
-          'DressingSelect',
-          'TelescopePrompt',
-        },
-        -- filetypes_allowlist: filetypes to illuminate, this is overridden by filetypes_denylist
-        filetypes_allowlist = {},
-        -- modes_denylist: modes to not illuminate, this overrides modes_allowlist
-        modes_denylist = {},
-        -- modes_allowlist: modes to illuminate, this is overridden by modes_denylist
-        modes_allowlist = {},
-        -- providers_regex_syntax_denylist: syntax to not illuminate, this overrides providers_regex_syntax_allowlist
-        -- Only applies to the 'regex' provider
-        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-        providers_regex_syntax_denylist = {},
-        -- providers_regex_syntax_allowlist: syntax to illuminate, this is overridden by providers_regex_syntax_denylist
-        -- Only applies to the 'regex' provider
-        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-        providers_regex_syntax_allowlist = {},
-        -- under_cursor: whether or not to illuminate under the cursor
-        under_cursor = true,
-      }
+    'pteroctopus/faster.nvim',
+    event = { 'BufReadPre', 'BufReadPost' },
+    opts = function()
+      vim.api.nvim_create_autocmd('BufReadPost', {
+        -- add other types here for long files:
+        pattern = {'*.js', '*.css'},
+        group = vim.api.nvim_create_augroup('faster_bigfile_custom', {}),
+        callback = function(args)
+          local line_count = vim.api.nvim_buf_line_count(args.buf)
+          ---@diagnostic disable-next-line: undefined-field
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+          -- if file is at least 10k and the average bytes per line is > 250, then disable everything
+          if ok and stats and (stats.size > (10 * 1024)) and (stats.size / line_count) > 250 then
+            vim.notify(
+              'Disabling for long file, bytes: ' .. stats.size .. ', lines: ' .. line_count .. ', bytes / lines: ' .. math.floor(stats.size / line_count)
+            )
+            vim.cmd('FasterDisableAllFeatures')
+            vim.b[args.buf].trouble_lualine = false
+          end
+        end,
+        desc = '[faster.nvim] Performance rule for handling js file with long lines',
+      })
+      return {}
     end,
   },
 
-  -- tabsline
-  {
-    'akinsho/bufferline.nvim',
-    version = '*',
-    -- dependencies = 'nvim-tree/nvim-web-devicons', -- drop using icons in tabline
-    opts = {
-      highlights = {
-        background = {
-          italic = true,
-        },
-        buffer_selected = {
-          bold = true,
-        },
-      },
-      options = {
-        -- enabled = true,
-        show_tab_indicators = true,
-        mode = 'buffers', -- set to 'tabs' to only show tabpages instead
-        numbers = 'none', -- can be 'none' | 'ordinal' | 'buffer_id' | 'both' | function
-        indicator = {
-          -- icon = '▎', -- unused
-          style = 'none', -- can be 'icon'|'underline'|'none',
-        },
-        always_show_bufferline = true,
-        diagnostics = false,
-        diagnostics_indicator = false,
-        -- custom_filter = false,
-        show_buffer_icons = false, -- disable filetype icons
-      },
-    },
-  },
+  ---------------------------------------------------------------------------
+  --- Yank and Registers
 
   -- yankring with '<localleader>p'
   -- https://github.com/gbprod/yanky.nvim
@@ -347,27 +382,27 @@ return {
     },
   },
 
-  -- avoid change cursor to center after bnext
-  -- https://github.com/BranimirE/fix-auto-scroll.nvim
+  ---------------------------------------------------------------------------
+  --- Text Align
+
+  -- Tabulator
   {
-    'BranimirE/fix-auto-scroll.nvim',
-    config = true,
-    event = 'VeryLazy',
+    'godlygeek/tabular',
   },
 
-  -- close buffers
-  -- https://github.com/ojroques/nvim-bufdel
+  -- for tables alignment, for Markdown also.
+  -- Usage by call `vip` and `:'<,'>EasyAlign *|`
   {
-    'ojroques/nvim-bufdel',
-    opts = {
-      next = 'tabs', -- 'cycle' | 'tabs' (default) | 'alternate'
-      quit = true, -- quit Neovim when last buffer is closed
-    },
-    config = function()
-      -- close buffer via 'ojroques/nvim-bufdel' plugin
-      vim.keymap.set('n', '<LocalLeader>q', ':BufDel<cr>', { silent = true })
-    end,
+    'junegunn/vim-easy-align',
   },
+
+  -- vim-swap: swap arguments delimited with ','. Keys: g< and g>
+  {
+    'machakann/vim-swap',
+  },
+
+  ---------------------------------------------------------------------------
+  --- LSP
 
   -- pretty diagnostics, references, telescope results, quickfix and location list
   -- https://github.com/folke/trouble.nvim
@@ -409,55 +444,33 @@ return {
     },
   },
 
-  -- color hex codes and color names
-  -- test: #AF0000, "#AF0000"
-  -- https://github.com/chrisbra/Colorizer
+  ---------------------------------------------------------------------------
+  --- cmp
+
+  -- latex symbols complete
   {
-    'chrisbra/Colorizer',
-    lazy = true, -- to load plugin use command: `:Lazy load Colorizer`
-    config = function()
-      -- vim.g.colorizer_auto_color = 1
-      vim.g.colorizer_colornames = 0
-      vim.g.colorizer_skip_comments = 0
-      -- vim.g.colorizer_auto_map = 1
-      vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
-    end,
+    'kdheepak/cmp-latex-symbols',
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    -- config in the cmp.setup() section in tail of file
   },
 
-  -- faster big files
-  -- https://github.com/pteroctopus/faster.nvim
-  -- config by https://github.com/pteroctopus/faster.nvim/issues/2#issue-2680715449
+  ---------------------------------------------------------------------------
+  --- Calculators
+
+  -- math calculator, in completion
   {
-    'pteroctopus/faster.nvim',
-    event = { 'BufReadPre', 'BufReadPost' },
-    opts = function()
-      vim.api.nvim_create_autocmd('BufReadPost', {
-        -- add other types here for long files:
-        pattern = {'*.js', '*.css'},
-        group = vim.api.nvim_create_augroup('faster_bigfile_custom', {}),
-        callback = function(args)
-          local line_count = vim.api.nvim_buf_line_count(args.buf)
-          ---@diagnostic disable-next-line: undefined-field
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
-          -- if file is at least 10k and the average bytes per line is > 250, then disable everything
-          if ok and stats and (stats.size > (10 * 1024)) and (stats.size / line_count) > 250 then
-            vim.notify(
-              'Disabling for long file, bytes: ' .. stats.size .. ', lines: ' .. line_count .. ', bytes / lines: ' .. math.floor(stats.size / line_count)
-            )
-            vim.cmd('FasterDisableAllFeatures')
-            vim.b[args.buf].trouble_lualine = false
-          end
-        end,
-        desc = '[faster.nvim] Performance rule for handling js file with long lines',
-      })
-      return {}
-    end,
+    'hrsh7th/cmp-calc',
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    -- config in the cmp.setup() section in tail of file
   },
 
-  -- https://github.com/JuliaEditorSupport/julia-vim
+  -- math calc
   {
-    "JuliaEditorSupport/julia-vim",
+    'arecarn/crunch.vim',
   },
+
+  ---------------------------------------------------------------------------
+  --- Various file types (Languages) support
 
   -- Tiny plugin to enhance Neovim's native comments
   -- https://github.com/folke/ts-comments.nvim
@@ -473,6 +486,11 @@ return {
     enabled = vim.fn.has("nvim-0.10.0") == 1,
   },
 
+  -- https://github.com/JuliaEditorSupport/julia-vim
+  {
+    "JuliaEditorSupport/julia-vim",
+  },
+
   -- plugins/quarto.lua
   {
     "quarto-dev/quarto-nvim",
@@ -480,6 +498,16 @@ return {
       "jmbuhr/otter.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+    setup = function ()
+    -- config = function ()
+      local cmp = require('cmp')
+      cmp.setup({
+        sources = cmp.config.sources({
+          { name = 'quarto-nvim' },
+        }),
+      })
+      vim.keymap.set('n', '<LocalLeader>m', '<Cmd>RenderMarkdown toggle<cr>', { silent = false })
+    end,
   },
 
   -- Plugin to improve viewing Markdown files in Neovim
@@ -551,6 +579,19 @@ return {
     end,
     ft = { "markdown", "quarto" },
   },
+
+  -- --  scheme support
+  -- {
+  --   'Olical/conjure',
+  -- },
+  -- {
+  --   'PaterJason/cmp-conjure',
+  --   dependencies = { 'hrsh7th/nvim-cmp' },
+  --   -- config in the cmp.setup() section in tail of file
+  -- },
+
+  ---------------------------------------------------------------------------
+  --- AI
 
   -- LLM plugin
   {
