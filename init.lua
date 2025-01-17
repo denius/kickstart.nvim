@@ -192,6 +192,7 @@ vim.opt.iminsert = 0 -- Keymap by default is en_US
 vim.opt.imsearch = 0 -- -1 is an bug
 -- spell
 vim.opt.spelllang = 'en_us,ru_yo'
+-- vim.opt.spell = true
 vim.keymap.set('n', '<LocalLeader>s', ':setlocal spell!<CR>', { silent = true, desc = 'Spell toggle' }) -- spell toggle
 
 -- [[ Basic Keymaps ]]
