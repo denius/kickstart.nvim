@@ -4,16 +4,6 @@
 -- See the kickstart.nvim README for more information
 --
 
--- Show Lang keymap in lualine status
--- https://github.com/nvim-lualine/lualine.nvim/issues/368
--- https://github.com/nvim-lualine/lualine.nvim/wiki/Component-snippets#keymap
-local function keymap()
-  if vim.opt.iminsert:get() > 0 and vim.b.keymap_name then
-    return '[' .. vim.b.keymap_name:upper() .. ']'
-  end
-  return ''
-end
-
 return {
 
   -- by denis
@@ -113,7 +103,16 @@ return {
       sections = {
         -- lualine_a = {'mode', keymap},
         -- lualine_c = {'filename', keymap},
-        lualine_x = {keymap, 'encoding', 'fileformat', 'filetype'},
+        -- lualine_x = {keymap, 'encoding', 'fileformat', 'filetype'},
+        lualine_x = {function()
+                       -- Show Lang keymap in lualine status
+                       -- https://github.com/nvim-lualine/lualine.nvim/issues/368
+                       -- https://github.com/nvim-lualine/lualine.nvim/wiki/Component-snippets#keymap
+                       if vim.opt.iminsert:get() > 0 and vim.b.keymap_name then
+                         return '[' .. vim.b.keymap_name:upper() .. ']'
+                       end
+                       return ''
+                     end, 'encoding', 'fileformat', 'filetype'},
       },
     },
   },
