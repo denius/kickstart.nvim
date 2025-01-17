@@ -6,13 +6,8 @@
 
 return {
 
-  -- by denis
-
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    -- by denis: DISABLE!
-    enabled = false,
-  },
+  ---------------------------------------------------------------------------
+  --- DISABLED
 
   ---------------------------------------------------------------------------
   --- Color Schemes
@@ -403,6 +398,22 @@ return {
   ---------------------------------------------------------------------------
   --- LSP
 
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    -- enabled = false,
+    opts = {
+      format_on_save = {
+        lsp_format = 'never',
+      },
+      formatters_by_ft = {
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+    },
+  },
+
   -- pretty diagnostics, references, telescope results, quickfix and location list
   -- https://github.com/folke/trouble.nvim
   {
@@ -497,15 +508,15 @@ return {
       "jmbuhr/otter.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
-    setup = function ()
+    -- setup = function ()
     -- config = function ()
+    init = function ()
       local cmp = require('cmp')
       cmp.setup({
         sources = cmp.config.sources({
           { name = 'quarto-nvim' },
         }),
       })
-      vim.keymap.set('n', '<LocalLeader>m', '<Cmd>RenderMarkdown toggle<cr>', { silent = false })
     end,
   },
 
