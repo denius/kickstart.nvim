@@ -262,16 +262,13 @@ vim.keymap.set('n', '<M-9>', ':buffer9<cr>', { silent = true }) -- switch to buf
 -- by denis: smart Home/End,  inspired by http://linsovet.com/vim-usefull-homekey-and-endkey
 local home_button = function()
   local current_cursor_column = vim.fn.virtcol '.'
-  vim.fn.execute('normal g^', 'silent')
+  vim.fn.execute('normal ^', 'silent')
   if current_cursor_column == vim.fn.virtcol '.' then
-    vim.fn.execute('normal g0', 'silent')
+    vim.fn.execute('normal 0', 'silent')
   end
 end
 vim.keymap.set('n', '<End>', 'g$', { silent = true })
-vim.keymap.set('n', '<Home>', home_button, { silent = true })
-vim.keymap.set('i', '<Home>', function()
-  home_button()
-end, { silent = true })
+vim.keymap.set({'n','i'}, '<Home>', home_button, { silent = true })
 
 -- by denis
 vim.keymap.set('n', '<LocalLeader>w', ':set wrap!<cr>', { silent = true }) -- line wrap by words toggle
