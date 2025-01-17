@@ -400,11 +400,9 @@ return {
 
   { -- Autoformat
     'stevearc/conform.nvim',
-    -- enabled = false,
+    enabled = false,
     opts = {
-      format_on_save = {
-        lsp_format = 'never',
-      },
+      format_on_save = nil;
       formatters_by_ft = {
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
