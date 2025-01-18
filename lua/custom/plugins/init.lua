@@ -627,15 +627,39 @@ return {
     end,
   },
 
-  -- --  scheme support
-  -- {
-  --   'Olical/conjure',
-  -- },
-  -- {
-  --   'PaterJason/cmp-conjure',
-  --   dependencies = { 'hrsh7th/nvim-cmp' },
-  --   -- config in the cmp.setup() section in tail of file
-  -- },
+  --  scheme support
+  --  https://github.com/Olical/conjure
+  --  for "scheme-langserver" https://github.com/ufo5260987423/scheme-langserver
+  --  some executables required:
+  --  `brew install chezscheme`
+  --  `brew install akku`
+  --  also needs to build https://github.com/gwatt/chez-exe to build "scheme-langserver".
+  --
+  --  TOO COMPLEX!!!
+  {
+    "Olical/conjure",
+    ft = { "scheme", "lisp"},
+    dependencies = { "PaterJason/cmp-conjure" },
+    lazy = true,
+    init = function()
+      -- Set configuration options here
+      -- Uncomment this to get verbose logging to help diagnose internal Conjure issues
+      -- This is VERY helpful when reporting an issue with the project
+      -- vim.g["conjure#debug"] = true
+    end,
+  },
+  {
+    "PaterJason/cmp-conjure",
+    ft = { "scheme", "lisp"},
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    lazy = true,
+    config = function()
+      local cmp = require('cmp')
+      local config = cmp.get_config()
+      table.insert(config.sources, { name = 'conjure', option = {} })
+      cmp.setup.buffer(config)
+    end,
+  },
 
   ---------------------------------------------------------------------------
   --- AI
