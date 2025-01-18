@@ -627,15 +627,18 @@ return {
     end,
   },
 
-  --  scheme support
-  --  https://github.com/Olical/conjure
-  --  for "scheme-langserver" https://github.com/ufo5260987423/scheme-langserver
+  --  for scheme support
+  --  https://github.com/Olical/conjure/wiki/Quick-start:-Scheme-(stdio)#prerequisites
+  --  also need mit-scheme:
+  --  `brew install mit-scheme`
+  --
+  --  for full support "scheme-langserver" https://github.com/ufo5260987423/scheme-langserver
   --  some executables required:
   --  `brew install chezscheme`
   --  `brew install akku`
   --  also needs to build https://github.com/gwatt/chez-exe to build "scheme-langserver".
+  --  IT IS TOO COMPLEX!!!
   --
-  --  TOO COMPLEX!!!
   {
     "Olical/conjure",
     ft = { "scheme", "lisp"},
