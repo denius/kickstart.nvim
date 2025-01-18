@@ -7,10 +7,10 @@
 return {
 
   ---------------------------------------------------------------------------
-  --- Disabled plugins
+  -- Disabled plugins
 
   ---------------------------------------------------------------------------
-  --- Color Schemes
+  -- Color Schemes
 
   -- -- not compatible with VSCode Neovim extension!!!
   -- {
@@ -79,7 +79,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- UI
+  -- UI
 
   -- Set lualine as statusline
   {
@@ -277,7 +277,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- Behavior
+  -- Behavior
 
   -- restore cursor position on file reopen
   { 'farmergreg/vim-lastplace' },
@@ -342,7 +342,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- Yank and Registers
+  -- Yank and Registers
 
   -- yankring with '<localleader>p'
   -- https://github.com/gbprod/yanky.nvim
@@ -377,7 +377,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- Text Align
+  -- Text Align
 
   -- Tabulator
   {
@@ -396,7 +396,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- LSP
+  -- LSP
 
   -- Autoformat
   {
@@ -459,7 +459,17 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- cmp
+  -- cmp
+
+  -- cmp toggle
+  -- https://github.com/gitaarik/nvim-cmp-toggle
+  {
+    'gitaarik/nvim-cmp-toggle',
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      vim.api.nvim_set_keymap('n', '<LocalLeader>a', ':NvimCmpToggle<CR>', { noremap = true, silent = true })
+    end
+  },
 
   -- latex symbols complete
   {
@@ -504,7 +514,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- Calculators
+  -- Calculators
 
   -- math calculator, in completion
   {
@@ -519,7 +529,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- Various file types (Languages) support
+  -- Various file types (Languages) support
 
   -- Tiny plugin to enhance Neovim's native comments
   -- https://github.com/folke/ts-comments.nvim
@@ -665,7 +675,7 @@ return {
   },
 
   ---------------------------------------------------------------------------
-  --- AI
+  -- AI
 
   -- LLM plugin
   {
