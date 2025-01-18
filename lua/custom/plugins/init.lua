@@ -465,7 +465,19 @@ return {
   {
     'kdheepak/cmp-latex-symbols',
     dependencies = { 'hrsh7th/nvim-cmp' },
-    -- config in the cmp.setup() section in tail of file
+    config = function ()
+      local cmp = require('cmp')
+      local config = cmp.get_config()
+      table.insert(config.sources,
+        {
+          name = "latex_symbols",
+          option = {
+            strategy = 0, -- mixed
+          },
+        }
+      )
+      cmp.setup.buffer(config)
+    end,
   },
 
   -- -- Add spell source for nvim-cmp based on vim's spellsuggest.
