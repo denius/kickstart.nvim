@@ -402,7 +402,7 @@ return {
     'stevearc/conform.nvim',
     enabled = false,
     opts = {
-      format_on_save = nil;
+      format_on_save = nil,
       formatters_by_ft = {
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
@@ -410,6 +410,11 @@ return {
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
     },
+    -- config = function ()
+    --   require('conform').setup({
+    --     format_on_save = nil,
+    --   })
+    -- end,
   },
 
   -- pretty diagnostics, references, telescope results, quickfix and location list
