@@ -472,20 +472,23 @@ return {
   -- https://github.com/f3fora/cmp-spell
   {
     'f3fora/cmp-spell',
-    require("cmp").setup({
-      sources = {
-        {
-          name = "spell",
-          option = {
-            keep_all_entries = false,
-            enable_in_context = function()
-              return true
-            end,
-            preselect_correct_word = true,
+    config = function ()
+      local cmp = require('cmp')
+      cmp.setup({
+        sources = {
+          {
+            name = "spell",
+            option = {
+              keep_all_entries = false,
+              enable_in_context = function()
+                return true
+              end,
+              preselect_correct_word = true,
+            },
           },
         },
-      },
-    })
+      })
+    end
   },
 
   ---------------------------------------------------------------------------
