@@ -7,7 +7,7 @@
 return {
 
   ---------------------------------------------------------------------------
-  --- DISABLED
+  --- Disabled plugins
 
   ---------------------------------------------------------------------------
   --- Color Schemes
@@ -466,6 +466,26 @@ return {
     'kdheepak/cmp-latex-symbols',
     dependencies = { 'hrsh7th/nvim-cmp' },
     -- config in the cmp.setup() section in tail of file
+  },
+
+  -- Add spell source for nvim-cmp based on vim's spellsuggest.
+  -- https://github.com/f3fora/cmp-spell
+  {
+    'f3fora/cmp-spell',
+    require("cmp").setup({
+      sources = {
+        {
+          name = "spell",
+          option = {
+            keep_all_entries = false,
+            enable_in_context = function()
+              return true
+            end,
+            preselect_correct_word = true,
+          },
+        },
+      },
+    })
   },
 
   ---------------------------------------------------------------------------
