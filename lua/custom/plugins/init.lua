@@ -480,28 +480,28 @@ return {
     end,
   },
 
-  -- -- Add spell source for nvim-cmp based on vim's spellsuggest.
-  -- -- https://github.com/f3fora/cmp-spell
-  -- {
-  --   'f3fora/cmp-spell',
-  --   config = function ()
-  --     local cmp = require('cmp')
-  --     cmp.setup({
-  --       sources = {
-  --         {
-  --           name = "spell",
-  --           option = {
-  --             keep_all_entries = false,
-  --             enable_in_context = function()
-  --               return true
-  --             end,
-  --             preselect_correct_word = true,
-  --           },
-  --         },
-  --       },
-  --     })
-  --   end
-  -- },
+  -- Add spell source for nvim-cmp based on vim's spellsuggest.
+  -- https://github.com/f3fora/cmp-spell
+  {
+    'f3fora/cmp-spell',
+    config = function ()
+      local cmp = require('cmp')
+      local config = cmp.get_config()
+      table.insert(config.sources,
+        {
+          name = "spell",
+          option = {
+            keep_all_entries = false,
+            enable_in_context = function()
+              return true
+            end,
+            preselect_correct_word = true,
+          },
+        }
+      )
+      cmp.setup.buffer(config)
+    end,
+  },
 
   ---------------------------------------------------------------------------
   --- Calculators
