@@ -595,80 +595,80 @@ return {
     end,
   },
 
-  ----- markdown preview plugin for (neo)vim
-  ----- https://github.com/iamcco/markdown-preview.nvim
-  ----- For setup CSS run:
-  ----- ```
-  ----- cd ~/.config
-  ----- git clone https://github.com/denius/markdown-css.git
-  ----- ```
-  ---{
-  ---  "iamcco/markdown-preview.nvim",
-  ---  cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-  ---  build = "cd app && yarn install",
-  ---  init = function()
-  ---    vim.g.mkdp_filetypes = { "markdown", "quarto" }
-  ---    vim.g.mkdp_auto_close = 1
-  ---    -- vim.g.mkdp_command_for_global = 1
-  ---    vim.g.mkdp_highlight_css = vim.fn.expand('~/.config/markdown-css/github-markdown-css-light.css')
-  ---    vim.g.mkdp_markdown_css = vim.fn.expand('~/.config/markdown-css/github-markdown-css-light.css')
-  ---    -- vim.g.mkdp_browser = '/snap/bin/chromium'
-  ---    -- via https://github.com/iamcco/markdown-preview.nvim/issues/262#issuecomment-1219333266
-  ---    vim.cmd(
-  ---      [[
-  ---      function OpenMarkdownPreview (url)
-  ---      execute "silent ! /usr/bin/chromium-browser --new-window --app=" . a:url
-  ---      endfunction
-  ---      ]]
-  ---    )
-  ---    vim.g.mkdp_browserfunc = 'OpenMarkdownPreview'
-  ---    vim.keymap.set('n', '<LocalLeader>v', ':MarkdownPreviewToggle<cr>', { silent = false })
-  ---  end,
-  ---  ft = { "markdown", "quarto" },
-  ---},
-  ---
-  ----- --  scheme support
-  ----- {
-  -----   'Olical/conjure',
-  ----- },
-  ----- {
-  -----   'PaterJason/cmp-conjure',
-  -----   dependencies = { 'hrsh7th/nvim-cmp' },
-  -----   -- config in the cmp.setup() section in tail of file
-  ----- },
-  ---
-  ------------------------------------------------------------------------------
-  ------ AI
-  ---
-  ----- LLM plugin
-  ---{
-  ---  'David-Kunz/gen.nvim',
-  ---  -- Custom Parameters (with defaults)
-  ---  opts = {
-  ---    model = 'OpenCodeInterpreter-DS:33b-q8_0', -- The default model to use.
-  ---    host = 'localhost', -- The host running the Ollama service.
-  ---    port = '11434', -- The port on which the Ollama service is listening.
-  ---    display_mode = 'float', -- The display mode. Can be "float" or "split".
-  ---    show_prompt = false, -- Shows the Prompt submitted to Ollama.
-  ---    show_model = false, -- Displays which model you are using at the beginning of your chat session.
-  ---    quit_map = 'q', -- set keymap for quit
-  ---    no_auto_close = false, -- Never closes the window automatically.
-  ---    init = function(options)
-  ---      pcall(io.popen, 'ollama serve > /dev/null 2>&1 &')
-  ---    end,
-  ---    -- Function to initialize Ollama
-  ---    command = function(options)
-  ---      return 'curl --silent --no-buffer -X POST http://' .. options.host .. ':' .. options.port .. '/api/chat -d $body'
-  ---      -- return 'curl --silent --no-buffer -X POST http://' .. options.host .. ':' .. options.port .. '/api/generate -d $body'
-  ---    end,
-  ---    -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
-  ---    -- This can also be a command string.
-  ---    -- The executed command must return a JSON object with { response, context }
-  ---    -- (context property is optional).
-  ---    -- list_models = '<omitted lua function>', -- Retrieves a list of model names
-  ---    debug = false, -- Prints errors and the command which is run.
-  ---  },
-  ---},
+  -- markdown preview plugin for (neo)vim
+  -- https://github.com/iamcco/markdown-preview.nvim
+  -- For setup CSS run:
+  -- ```
+  -- cd ~/.config
+  -- git clone https://github.com/denius/markdown-css.git
+  -- ```
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown", "quarto" },
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown", "quarto" }
+      vim.g.mkdp_auto_close = 1
+      -- vim.g.mkdp_command_for_global = 1
+      vim.g.mkdp_highlight_css = vim.fn.expand('~/.config/markdown-css/github-markdown-css-light.css')
+      vim.g.mkdp_markdown_css = vim.fn.expand('~/.config/markdown-css/github-markdown-css-light.css')
+      -- vim.g.mkdp_browser = '/snap/bin/chromium'
+      -- via https://github.com/iamcco/markdown-preview.nvim/issues/262#issuecomment-1219333266
+      vim.cmd(
+        [[
+        function OpenMarkdownPreview (url)
+        execute "silent ! /usr/bin/chromium-browser --new-window --app=" . a:url
+        endfunction
+        ]]
+      )
+      vim.g.mkdp_browserfunc = 'OpenMarkdownPreview'
+      vim.keymap.set('n', '<LocalLeader>v', ':MarkdownPreviewToggle<cr>', { silent = false })
+    end,
+  },
+
+  -- --  scheme support
+  -- {
+  --   'Olical/conjure',
+  -- },
+  -- {
+  --   'PaterJason/cmp-conjure',
+  --   dependencies = { 'hrsh7th/nvim-cmp' },
+  --   -- config in the cmp.setup() section in tail of file
+  -- },
+
+  ---------------------------------------------------------------------------
+  --- AI
+
+  -- LLM plugin
+  {
+    'David-Kunz/gen.nvim',
+    -- Custom Parameters (with defaults)
+    opts = {
+      model = 'qwen2.5-coder:14b-instruct-fp16', -- The default model to use.
+      host = 'localhost', -- The host running the Ollama service.
+      port = '11434', -- The port on which the Ollama service is listening.
+      display_mode = 'float', -- The display mode. Can be "float" or "split".
+      show_prompt = false, -- Shows the Prompt submitted to Ollama.
+      show_model = false, -- Displays which model you are using at the beginning of your chat session.
+      quit_map = 'q', -- set keymap for quit
+      no_auto_close = false, -- Never closes the window automatically.
+      init = function(options)
+        -- pcall(io.popen, 'ollama serve > /dev/null 2>&1 &')
+      end,
+      -- Function to initialize Ollama
+      command = function(options)
+        return 'curl --silent --no-buffer -X POST http://' .. options.host .. ':' .. options.port .. '/api/chat -d $body'
+        -- return 'curl --silent --no-buffer -X POST http://' .. options.host .. ':' .. options.port .. '/api/generate -d $body'
+      end,
+      -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
+      -- This can also be a command string.
+      -- The executed command must return a JSON object with { response, context }
+      -- (context property is optional).
+      -- list_models = '<omitted lua function>', -- Retrieves a list of model names
+      debug = false, -- Prints errors and the command which is run.
+    },
+  },
 
 }
 
