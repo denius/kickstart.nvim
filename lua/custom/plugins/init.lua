@@ -558,43 +558,42 @@ return {
     end,
   },
 
-  -- -- Plugin to improve viewing Markdown files in Neovim
-  -- -- https://github.com/MeanderingProgrammer/render-markdown.nvim
-  -- {
-  --   'MeanderingProgrammer/render-markdown.nvim',
-  --   -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
-  --   -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-  --   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-  --   ---@module 'render-markdown'
-  --   ---@type render.md.UserConfig
-  --   opts = {},
-  --   config = function ()
-  --     require('render-markdown').setup({
-  --       enabled = false,
-  --       file_types = { 'markdown', 'quarto' },
-  --       bullet = {
-  --         -- icons = { '● ', '○ ', '◆ ', '◇ ' },
-  --         -- left_pad = 2,
-  --         right_pad = 1,
-  --       },
-  --       code = {
-  --         -- style = 'normal',
-  --         border = 'thick',
-  --       },
-  --       link = {
-  --         -- Turn on / off inline link icon rendering
-  --         enabled = false,
-  --       },
-  --     })
-  --     local cmp = require('cmp')
-  --     cmp.setup({
-  --       sources = cmp.config.sources({
-  --         { name = 'render-markdown' },
-  --       }),
-  --     })
-  --     vim.keymap.set('n', '<LocalLeader>m', '<Cmd>RenderMarkdown toggle<cr>', { silent = false })
-  --   end,
-  -- },
+  -- Plugin to improve viewing Markdown files in Neovim
+  -- https://github.com/MeanderingProgrammer/render-markdown.nvim
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { "quarto", "markdown", "qmd", "md", "text" },
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+    config = function ()
+      require('render-markdown').setup({
+        enabled = false,
+        file_types = { 'markdown', 'quarto' },
+        bullet = {
+          -- icons = { '● ', '○ ', '◆ ', '◇ ' },
+          -- left_pad = 2,
+          right_pad = 1,
+        },
+        code = {
+          -- style = 'normal',
+          border = 'thick',
+        },
+        link = {
+          -- Turn on / off inline link icon rendering
+          enabled = false,
+        },
+      })
+      local cmp = require('cmp')
+      local config = cmp.get_config()
+      table.insert(config.sources, { name = 'render-markdown', option = {} })
+      cmp.setup.buffer(config)
+      vim.keymap.set('n', '<LocalLeader>m', '<Cmd>RenderMarkdown toggle<cr>', { silent = false })
+    end,
+  },
 
   ----- markdown preview plugin for (neo)vim
   ----- https://github.com/iamcco/markdown-preview.nvim
