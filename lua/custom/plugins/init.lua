@@ -465,6 +465,7 @@ return {
   -- https://github.com/gitaarik/nvim-cmp-toggle
   {
     'gitaarik/nvim-cmp-toggle',
+    enabled = false,
     dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
       vim.api.nvim_set_keymap('n', '<LocalLeader>a', ':NvimCmpToggle<CR>', { noremap = true, silent = true })
@@ -520,7 +521,12 @@ return {
   {
     'hrsh7th/cmp-calc',
     dependencies = { 'hrsh7th/nvim-cmp' },
-    -- config in the cmp.setup() section in tail of file
+    config = function ()
+      local cmp = require('cmp')
+      local config = cmp.get_config()
+      table.insert(config.sources, { name = 'calc', option = {} })
+      cmp.setup.buffer(config)
+    end,
   },
 
   -- math calc
