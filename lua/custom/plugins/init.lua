@@ -398,23 +398,24 @@ return {
   ---------------------------------------------------------------------------
   --- LSP
 
-  { -- Autoformat
+  -- Autoformat
+  {
     'stevearc/conform.nvim',
-    enabled = false,
-    opts = {
-      format_on_save = nil,
-      formatters_by_ft = {
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
-    },
-    -- config = function ()
-    --   require('conform').setup({
-    --     format_on_save = nil,
-    --   })
-    -- end,
+    -- enabled = false,
+    -- opts = {
+    --   format_on_save = nil,
+    --   formatters_by_ft = {
+    --     -- Conform can also run multiple formatters sequentially
+    --     -- python = { "isort", "black" },
+    --     -- You can use 'stop_after_first' to run the first available formatter from the list
+    --     -- javascript = { "prettierd", "prettier", stop_after_first = true },
+    --   },
+    -- },
+    config = function ()
+      require('conform').setup({
+        format_on_save = nil,
+      })
+    end,
   },
 
   -- pretty diagnostics, references, telescope results, quickfix and location list
