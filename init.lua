@@ -287,6 +287,10 @@ vim.keymap.set('n', '<LocalLeader>w', ':set wrap!<cr>', { silent = true }) -- li
 vim.keymap.set('n', 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, silent = true })
 vim.keymap.set('n', 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, silent = true })
 
+-- by denis: add keymap for mini.surround for add around word or selection
+vim.keymap.set('n', '<LocalLeader>o', 'saiw', { remap = true, silent = true })
+vim.keymap.set('v', '<LocalLeader>o', 'sa', { remap = true, silent = true })
+
 -- by denis: Do not yank symbols by Del
 -- https://vi.stackexchange.com/questions/14361/dont-yank-character-with-del-key-in-normal-mode
 vim.keymap.set('n', '<Del>', '"_x', { silent = true })
