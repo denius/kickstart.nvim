@@ -275,9 +275,9 @@ vim.keymap.set('i', '<End>', '<C-o>g$', { silent = true })
 -- by denis
 -- UP/DOWN will go through screen lines even for long lines
 -- by https://stackoverflow.com/questions/5478933/vim-move-around-quickly-inside-of-long-line
-vim.keymap.set('n', '<Up>', 'gk', { silent = true })
+vim.keymap.set({'n', 'v'}, '<Up>', 'gk', { silent = true })
 vim.keymap.set('i', '<Up>', '<C-o>gk', { silent = true })
-vim.keymap.set('n', '<Down>', 'gj', { silent = true })
+vim.keymap.set({'n', 'v'}, '<Down>', 'gj', { silent = true })
 vim.keymap.set('i', '<Down>', '<C-o>gj', { silent = true })
 
 -- by denis
