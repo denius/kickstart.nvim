@@ -6,10 +6,10 @@
 
 return {
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- Disabled plugins
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- Color Schemes
 
   -- -- not compatible with VSCode Neovim extension!!!
@@ -49,6 +49,62 @@ return {
     end,
   },
 
+  -- Material scheme with plugins support
+  -- https://github.com/marko-cerovac/material.nvim
+  {
+    'marko-cerovac/material.nvim',
+    priority = 890,
+    config = function()
+      require('material').setup({
+        plugins = { -- Uncomment the plugins that you use to highlight them
+          -- Available plugins:
+          -- "coc",
+          -- "colorful-winsep",
+          -- "dap",
+          -- "dashboard",
+          -- "eyeliner",
+          "fidget",
+          -- "flash",
+          -- "gitsigns",
+          -- "harpoon",
+          -- "hop",
+          "illuminate",
+          "indent-blankline",
+          -- "lspsaga",
+          -- "mini",
+          -- "neogit",
+          -- "neotest",
+          -- "neo-tree",
+          -- "neorg",
+          -- "noice",
+          "nvim-cmp",
+          -- "nvim-navic",
+          -- "nvim-tree",
+          "nvim-web-devicons",
+          -- "rainbow-delimiters",
+          -- "sneak",
+          "telescope",
+          "trouble",
+          "which-key",
+          -- "nvim-notify",
+        },
+      })
+      vim.cmd("colorscheme flow")
+    end,
+  },
+
+  -- Nord theme
+  -- https://www.nordtheme.com/docs/colors-and-palettes
+  {
+    'nordtheme/vim',
+    priority = 870,
+    config = function()
+      vim.cmd.colorscheme 'nord'
+    end,
+  },
+
+  -- A fork of material.nvim colorscheme for Neovim using Papercolor color palette
+  -- https://github.com/yorik1984/newpaper.nvim
   {
     'yorik1984/newpaper.nvim',
     priority = 90,
@@ -78,7 +134,7 @@ return {
     end,
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- UI
 
   -- Set lualine as statusline
@@ -276,7 +332,7 @@ return {
     end,
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- Behavior
 
   -- restore cursor position on file reopen
@@ -300,7 +356,7 @@ return {
     dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
       require('nvim-autopairs').setup({
-        ignored_next_char = [=[[А-Яа-яЁё%w%%%'%[%"%.%`%$]]=],
+        ignored_next_char = [=[[А-Яа-яЁё_%w%%%'%[%"%.%`%$]]=],
         -- ignored_next_char = "(" .. "[\194-\244]" .. "|" .. "[\128-\191]" .. "|" .. "[%w%%%'%[%\"%.%`%$]" .. ")",
         -- ignored_next_char = "(" .. [=[[%w%%%'%[%"%.%`%$]]=] .. "|" .. "[\194-\244][\128-\191]" .. ")",
       })
@@ -341,7 +397,7 @@ return {
     end,
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- Yank and Registers
 
   -- yankring with '<localleader>p'
@@ -376,7 +432,7 @@ return {
     },
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- Text Align
 
   -- Tabulator
@@ -395,10 +451,12 @@ return {
     'machakann/vim-swap',
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- LSP
+  -- https://microsoft.github.io/language-server-protocol/implementors/servers/
 
-  -- Autoformat
+  -- Custom config for Autoformat
+  -- Note: '<Leader>f' to format buffer
   {
     'stevearc/conform.nvim',
     -- enabled = false,
@@ -458,7 +516,7 @@ return {
     },
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- cmp
 
   -- cmp toggle
@@ -493,8 +551,12 @@ return {
 
   -- Add spell source for nvim-cmp based on vim's spellsuggest.
   -- https://github.com/f3fora/cmp-spell
+  -- To enable this plugin, you need to enable spell checking,
+  -- <LocalLeader>s in this configuration.
   {
     'f3fora/cmp-spell',
+    enabled = false,
+    dependencies = { 'hrsh7th/nvim-cmp' },
     config = function ()
       local cmp = require('cmp')
       local config = cmp.get_config()
@@ -514,7 +576,26 @@ return {
     end,
   },
 
-  ---------------------------------------------------------------------------
+  -- Dictionary source for nvim-cmp
+  -- https://github.com/uga-rosa/cmp-dictionary
+  {
+    'uga-rosa/cmp-dictionary',
+    enabled = false,
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function ()
+      require("cmp_dictionary").setup({
+        paths = vim.fn.expand('~/.config/nvim/dict/wrussian'),
+        -- paths = { "/usr/share/dict/words" },
+        exact_length = 2,
+      })
+      local cmp = require('cmp')
+      local config = cmp.get_config()
+      table.insert(config.sources, { name = 'dictionary', keyword_length = 2, option = {} })
+      cmp.setup.buffer(config)
+    end,
+  },
+
+  -- ---------------------------------------------------------------------------
   -- Calculators
 
   -- math calculator, in completion
@@ -534,7 +615,7 @@ return {
     'arecarn/crunch.vim',
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- Various file types (Languages) support
 
   -- Tiny plugin to enhance Neovim's native comments
@@ -680,7 +761,7 @@ return {
     end,
   },
 
-  ---------------------------------------------------------------------------
+  -- ---------------------------------------------------------------------------
   -- AI
 
   -- LLM plugin
