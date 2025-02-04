@@ -640,7 +640,7 @@ return {
   -- plugins/quarto.lua
   {
     "quarto-dev/quarto-nvim",
-    ft = { "quarto", "markdown", "qmd" },
+    ft = { "quarto", "qmd" },
     dependencies = {
       "jmbuhr/otter.nvim",
       "nvim-treesitter/nvim-treesitter",
