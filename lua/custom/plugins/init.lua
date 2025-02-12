@@ -123,16 +123,38 @@ return {
 
   -- color hex codes and color names
   -- test: #AF0000, "#AF0000"
-  -- https://github.com/chrisbra/Colorizer
+  -- -- https://github.com/chrisbra/Colorizer
+  -- {
+  --   'chrisbra/Colorizer',
+  --   lazy = true, -- to load plugin use command: `:Lazy load Colorizer`
+  --   config = function()
+  --     -- vim.g.colorizer_auto_color = 1
+  --     vim.g.colorizer_colornames = 0
+  --     vim.g.colorizer_skip_comments = 0
+  --     -- vim.g.colorizer_auto_map = 1
+  --     vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
+  --   end,
+  -- },
+  -- https://github.com/norcalli/nvim-colorizer.lua
   {
-    'chrisbra/Colorizer',
-    lazy = true, -- to load plugin use command: `:Lazy load Colorizer`
+    'norcalli/nvim-colorizer.lua',
     config = function()
-      -- vim.g.colorizer_auto_color = 1
-      vim.g.colorizer_colornames = 0
-      vim.g.colorizer_skip_comments = 0
-      -- vim.g.colorizer_auto_map = 1
-      vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
+      require('colorizer').setup({
+        DEFAULT_OPTIONS = {
+          RGB      = true;         -- #RGB hex codes
+          RRGGBB   = true;         -- #RRGGBB hex codes
+          names    = true;         -- "Name" codes like Blue
+          RRGGBBAA = false;        -- #RRGGBBAA hex codes
+          rgb_fn   = false;        -- CSS rgb() and rgba() functions
+          hsl_fn   = false;        -- CSS hsl() and hsla() functions
+          css      = false;        -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+          css_fn   = false;        -- Enable all CSS *functions*: rgb_fn, hsl_fn
+          -- Available modes: foreground, background
+          mode     = 'background'; -- Set the display mode.
+        }
+      })
+      -- toggle by '<LocalLeader>c', by default is off
+      vim.keymap.set('n', '<LocalLeader>c', ':ColorizerToggle<cr>', { silent = true })
     end,
   },
 
