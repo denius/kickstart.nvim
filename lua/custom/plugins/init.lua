@@ -6,8 +6,10 @@
 
 return {
 
+
   -- ---------------------------------------------------------------------------
   -- Disabled plugins
+
 
   -- ---------------------------------------------------------------------------
   -- Color Schemes
@@ -133,6 +135,7 @@ return {
       vim.keymap.set('n', '<LocalLeader>c', ':ColorHighlight<cr>', { silent = true })
     end,
   },
+
 
   -- ---------------------------------------------------------------------------
   -- UI
@@ -332,6 +335,7 @@ return {
     end,
   },
 
+
   -- ---------------------------------------------------------------------------
   -- Behavior
 
@@ -397,6 +401,7 @@ return {
     end,
   },
 
+
   -- ---------------------------------------------------------------------------
   -- Yank and Registers
 
@@ -432,6 +437,7 @@ return {
     },
   },
 
+
   -- ---------------------------------------------------------------------------
   -- Text Align
 
@@ -450,6 +456,7 @@ return {
   {
     'machakann/vim-swap',
   },
+
 
   -- ---------------------------------------------------------------------------
   -- LSP
@@ -475,6 +482,7 @@ return {
       })
     end,
   },
+
 
   -- pretty diagnostics, references, telescope results, quickfix and location list
   -- https://github.com/folke/trouble.nvim
@@ -515,6 +523,7 @@ return {
       },
     },
   },
+
 
   -- ---------------------------------------------------------------------------
   -- cmp
@@ -595,6 +604,7 @@ return {
     end,
   },
 
+
   -- ---------------------------------------------------------------------------
   -- Calculators
 
@@ -614,6 +624,7 @@ return {
   {
     'arecarn/crunch.vim',
   },
+
 
   -- ---------------------------------------------------------------------------
   -- Various file types (Languages) support
@@ -760,6 +771,20 @@ return {
       cmp.setup.buffer(config)
     end,
   },
+
+
+  -- ---------------------------------------------------------------------------
+  -- Browser's edit area, in Firefox, Chromium.
+
+  -- {
+  --   'glacambre/firenvim',
+  --   build = ":call firenvim#install(0)"
+  --   -- should be set `guifont`.
+  --   -- also need set up ':set lines' and ':set columns' for GUI mode,
+  --   -- see https://github.com/glacambre/firenvim/issues/972#issuecomment-797805351
+  --   -- also need to disable 'akinsho/bufferline.nvim' in case of 'glacambre/firenvim'.
+  -- }
+
 
   -- ---------------------------------------------------------------------------
   -- AI

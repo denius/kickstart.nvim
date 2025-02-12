@@ -183,6 +183,8 @@ vim.opt.virtualedit = 'block,onemore'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.opt.guifont = 'Iosevka Nerd Font:h15'
+
 -- # Russian settings
 -- Possible file encodings and detection sequence.
 vim.opt.fileencodings = 'utf8,cp1251,koi8-r'
