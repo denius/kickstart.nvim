@@ -270,7 +270,7 @@ local home_button = function()
     vim.fn.execute('normal! g0', 'silent')
   end
 end
-vim.keymap.set({'n','i'}, '<Home>', home_button, { silent = true })
+vim.keymap.set({'n','i', 'v'}, '<Home>', home_button, { silent = true })
 vim.keymap.set('n', '<End>', 'g$', { silent = true })
 vim.keymap.set('i', '<End>', '<C-o>g$', { silent = true })
 
