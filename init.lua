@@ -96,83 +96,83 @@ vim.g.maplocalleader = '\\'
 vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
--- See `:help vim.opt`
+-- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
 -- Make line numbers default
-vim.opt.number = true
+vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+-- vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
--- by denis vim.opt.mouse = 'a'
+-- by denis vim.o.mouse = 'a'
 -- Enable mouse mode only in Normal and Visual
-vim.opt.mouse = 'nv'
+vim.o.mouse = 'nv'
 
 -- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
+vim.o.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  -- by denis vim.opt.clipboard = 'unnamedplus'
-  vim.opt.clipboard = 'unnamed'
+  -- by denis vim.o.clipboard = 'unnamedplus'
+  vim.o.clipboard = 'unnamed'
 end)
 
 -- Enable break indent
-vim.opt.breakindent = true
+vim.o.breakindent = true
 
 -- Save undo history
-vim.opt.undofile = true
+vim.o.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+vim.o.signcolumn = 'yes'
 
 -- Decrease update time
-vim.opt.updatetime = 250
+vim.o.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+vim.o.timeoutlen = 300
 
 -- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+vim.o.splitright = true
+vim.o.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
--- by denis vim.opt.list = true
-vim.opt.list = false
+-- by denis vim.o.list = true
+vim.o.list = false
 -- by denis vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
--- vim.o.listchars = 'tab:—▷,trail:⋅,nbsp:␣,space:⋅'
+-- vim.opt.listchars = 'tab:—▷,trail:⋅,nbsp:␣,space:⋅'
 vim.opt.listchars = { tab = '—▷', trail = '⋅', nbsp = '␣', space = '⋅' }
 
 -- by denis^ see https://stackoverflow.com/questions/51995128/setting-autoindentation-to-spaces-in-neovim
-vim.opt.expandtab = true
+vim.o.expandtab = true
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+vim.o.inccommand = 'split'
 
 -- Show which line your cursor is on
-vim.opt.cursorline = true
+vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
--- by denis vim.opt.scrolloff = 10
-vim.opt.scrolloff = 3 -- minimal number of screen lines to keep above and below the cursor.
-vim.opt.sidescrolloff = 5 -- minimal number of screen lines to keep left and right of the cursor.
+-- by denis vim.o.scrolloff = 10
+vim.o.scrolloff = 3 -- minimal number of screen lines to keep above and below the cursor.
+vim.o.sidescrolloff = 5 -- minimal number of screen lines to keep left and right of the cursor.
 
 -- by denis
 -- virtualedit -- allow cursor moving over blank space
--- vim.opt.virtualedit = 'all'
-vim.opt.virtualedit = 'block,onemore'
+-- vim.o.virtualedit = 'all'
+vim.o.virtualedit = 'block,onemore'
 
 -- by denis
 -- Set completeopt to have a better completion experience
@@ -183,24 +183,24 @@ vim.opt.virtualedit = 'block,onemore'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.opt.guifont = 'Iosevka Nerd Font:h15'
+vim.o.guifont = 'Iosevka Nerd Font:h15'
 
 -- # Russian settings
 -- Possible file encodings and detection sequence.
-vim.opt.fileencodings = 'utf8,cp1251,koi8-r'
+vim.o.fileencodings = 'utf8,cp1251,koi8-r'
 -- Switching keyboard layouts by <C-^>, more precisely by <C-6>
-vim.opt.keymap = 'russian-jcukenwin'
-vim.opt.iminsert = 0 -- Keymap by default is en_US
-vim.opt.imsearch = 0 -- -1 is an bug
+vim.o.keymap = 'russian-jcukenwin'
+vim.o.iminsert = 0 -- Keymap by default is en_US
+vim.o.imsearch = 0 -- -1 is an bug
 -- spell
-vim.opt.spelllang = 'en_us,ru_yo'
+vim.o.spelllang = 'en_us,ru_yo'
 -- vim.opt.spell = true
 vim.keymap.set('n', '<LocalLeader>s', ':setlocal spell!<CR>', { silent = true, desc = 'Spell toggle' }) -- spell toggle
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
-vim.opt.confirm = true
+vim.o.confirm = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -313,12 +313,12 @@ vim.keymap.set('n', '<Del>', '"_x', { silent = true })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
+--  See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
@@ -331,8 +331,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     error('Error cloning lazy.nvim:\n' .. out)
   end
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
+end
+
+---@type vim.Option
+local rtp = vim.opt.rtp
+rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 --
@@ -347,7 +350,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -403,7 +406,7 @@ require('lazy').setup({
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
-      -- this setting is independent of vim.opt.timeoutlen
+      -- this setting is independent of vim.o.timeoutlen
       delay = 0,
       icons = {
         -- set icon mappings to true if you have a Nerd Font
@@ -672,6 +675,19 @@ require('lazy').setup({
           --  the definition of its *type*, not where it was *defined*.
           map('grt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
 
+          -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
+          ---@param client vim.lsp.Client
+          ---@param method vim.lsp.protocol.Method
+          ---@param bufnr? integer some lsp support methods only in specific files
+          ---@return boolean
+          local function client_supports_method(client, method, bufnr)
+            if vim.fn.has 'nvim-0.11' == 1 then
+              return client:supports_method(method, bufnr)
+            else
+              return client.supports_method(method, { bufnr = bufnr })
+            end
+          end
+
           -- by denis, provided by 'RRethy/vim-illuminate' plugin
 
           -- -- The following two autocommands are used to highlight references of the
@@ -849,10 +865,10 @@ require('lazy').setup({
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
-        return {
-          timeout_ms = 500,
+          return {
+            timeout_ms = 500,
             lsp_format = 'fallback',
-        }
+          }
         end
       end,
       formatters_by_ft = {
