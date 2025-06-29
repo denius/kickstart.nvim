@@ -839,6 +839,12 @@ require('lazy').setup({
           end,
         },
       }
+
+      -- added by denis to enable separate installed "julials".
+      -- To install "julials" in separate environment use the command:
+      --   `julia --project=@nvim-lspconfig -e 'Using Pkg; Pkg.add("LanguageServer")'`
+      vim.lsp.enable("julials")
+
     end,
   },
 
