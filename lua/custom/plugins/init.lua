@@ -658,7 +658,7 @@ return {
     opts = {
       lang = {
         c = "/* %s */",
-        julia = "// %s",
+        julia = "# %s",
       },
     },
     event = "VeryLazy",

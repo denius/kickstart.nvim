@@ -843,6 +843,30 @@ require('lazy').setup({
       -- added by denis to enable separate installed "julials".
       -- To install "julials" in separate environment use the command:
       --   `julia --project=@nvim-lspconfig -e 'Using Pkg; Pkg.add("LanguageServer")'`
+
+      -- additional config not worked
+      -- local lspconfig = require('lspconfig')
+      -- lspconfig.julials.setup({
+      --   settings = {
+      --     julia = {
+      --       -- key config: enable analys of whole Base parts
+      --       importAllStdlibs = true,
+      --       -- another attempt
+      --       environmentPath = "",  -- use current environment
+      --       loadExtraModules = {
+      --         "Base.Order",
+      --         "Base.Broadcast",
+      --         "Base.Docs",
+      --         "Base.Meta"
+      --       },
+      --       -- linter
+      --       lint = true,
+      --       -- view most files
+      --       analysisFileCount = 1000,
+      --       symbolCacheDownload = false,
+      --     }
+      --   }
+      -- })
       vim.lsp.enable("julials")
 
     end,
