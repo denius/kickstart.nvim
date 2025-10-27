@@ -116,6 +116,7 @@ return {
         style = 'light',
         terminal = 'contrast',
         sidebars_contrast = { 'minimap' },
+        preset = {}, -- needs `preset` even empty
       }
       vim.cmd.colorscheme 'newpaper'
     end,
